@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>PlannerPal — Your Academic Planner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -322,6 +322,7 @@ body {
 .filter-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
 .filter-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
 
+.task-table { width: 100%; border-collapse: collapse; }
 .task-table th {
   padding: 14px 16px; text-align: left; font-size: 12px;
   font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
@@ -570,17 +571,6 @@ body {
 .empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5;}
 .empty-state p { font-size: 15px; font-weight: 500;}
 
-@media (max-width: 600px) {
-  .main { padding: 16px; }
-  .months-grid { grid-template-columns: repeat(2, 1fr); }
-  .form-row { grid-template-columns: 1fr; }
-  .modal { width: 100%; border-radius: 24px 24px 0 0; position: fixed; bottom: 0; transform: translateY(100%); }
-  .modal-overlay.open .modal { transform: translateY(0); }
-  .modal-overlay { align-items: flex-end; }
-  .month-view-header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px;}
-  .year-nav-btn { display: none; }
-}
-
 .lang-toggle {
   width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border);
   background: var(--white); cursor: pointer; font-size: 20px;
@@ -724,6 +714,86 @@ body {
   background: var(--cream2); border-radius: 20px; font-size: 13px; font-weight: 500;
   border: 1px solid var(--border);
 }
+
+
+/* =========================================
+   📱 MOBILE RESPONSIVE OVERRIDES
+   ชุดโค้ดด้านล่างนี้จะทำงานเฉพาะหน้าจอมือถือเท่านั้น
+   (Desktop จะไม่ได้รับผลกระทบใดๆ ทั้งสิ้น)
+========================================= */
+
+/* ซ่อนเมนูของมือถือไว้ก่อนเมื่อเปิดบน Desktop */
+.bottom-nav { display: none; }
+.fab-btn { display: none; }
+.modal-drag-handle { display: none; }
+
+@media (max-width: 768px) {
+  /* 1. จัดการแถบด้านบน (Topbar) และเปลี่ยนเป็นเมนูด้านล่าง (Bottom Nav) */
+  .topbar { padding: 0 16px; }
+  .nav-tabs { display: none; } /* ซ่อนเมนูด้านบน */
+  .topbar-right .btn-primary, .topbar-right .btn-ghost { display: none; } /* ซ่อนปุ่มด้านบน */
+  
+  .bottom-nav {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
+    background: rgba(253, 252, 251, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border); padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+    justify-content: space-around; align-items: center; box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+  }
+  .bnav-tab {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: none; border: none; font-size: 10px; font-family: 'Sarabun', sans-serif; font-weight: 500;
+    color: var(--ink3); gap: 4px; padding: 6px; flex: 1; transition: all 0.2s; cursor: pointer;
+  }
+  .bnav-tab .icon { font-size: 20px; transition: transform 0.2s; }
+  .bnav-tab.active { color: var(--accent); }
+  .bnav-tab.active .icon { transform: scale(1.15) translateY(-2px); }
+
+  /* 2. เพิ่มปุ่มวงกลม Add Task มุมขวาล่าง (FAB) */
+  .fab-btn {
+    display: flex; position: fixed; bottom: calc(80px + env(safe-area-inset-bottom)); right: 20px;
+    width: 56px; height: 56px; border-radius: 50%; background: var(--accent); color: white;
+    font-size: 28px; font-weight: 300; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(124, 111, 205, 0.4); border: none; z-index: 98; cursor: pointer;
+  }
+
+  /* 3. ปรับขนาดพื้นที่รอบๆ ให้ไม่ล้นจอ */
+  .main { padding: 16px 12px; margin-bottom: calc(60px + env(safe-area-inset-bottom)); }
+  .months-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .year-header { width: 100%; justify-content: space-between; padding: 12px; }
+  .month-view-header { flex-direction: column; align-items: flex-start; padding: 16px; gap: 12px; }
+
+  /* 4. แปลง Modal ให้เด้งขึ้นมาจากด้านล่างสุดของจอ (Bottom Sheet) */
+  .modal-overlay { align-items: flex-end; }
+  .modal {
+    width: 100%; max-width: 100%; border-radius: 24px 24px 0 0; margin: 0;
+    transform: translateY(100%); max-height: 90vh;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-drag-handle { display: block; width: 40px; height: 5px; background: var(--border); border-radius: 3px; margin: 12px auto 0; }
+  .modal-header { padding: 16px 20px; }
+  .modal-body { padding: 20px 20px calc(24px + env(safe-area-inset-bottom)); }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .type-selector, .repeat-opts { grid-template-columns: repeat(2, 1fr); }
+
+  /* 5. ปฏิทินรายสัปดาห์ (Week View) ให้เลื่อนซ้ายขวาได้ ไม่บีบเละ */
+  .week-grid { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .week-header-row, .week-body { min-width: 600px; }
+
+  /* 6. หน้าตาราง Tasks เปลี่ยนให้เป็นการ์ดแนวตั้ง (Card Based List) */
+  .task-table, .task-table tbody, .task-table tr, .task-table td { display: block; width: 100%; }
+  .task-table thead { display: none; }
+  .task-table tr { margin-bottom: 16px; border: 1px solid var(--border); border-radius: 16px; background: var(--white); box-shadow: 0 2px 8px rgba(0,0,0,0.02); overflow: hidden; }
+  .task-table td { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border2); padding: 12px 16px; text-align: right; }
+  .task-table td:last-child { border-bottom: none; justify-content: flex-end; gap: 8px; }
+  
+  /* เพิ่มคำอธิบายหัวข้อหน้าเนื้อหาในแต่ละการ์ด (เช่น Type:, Deadline:) */
+  .task-table td::before { content: attr(data-label); font-weight: 600; font-size: 11px; color: var(--ink3); text-transform: uppercase; margin-right: auto; text-align: left; }
+  .task-table td[data-label=""]::before { display: none; } /* ซ่อนช่อง Checkbox */
+  
+  /* จัดหน้าตาคอลัมน์ชื่อในมือถือให้สวยงามเป็น Header ของการ์ด */
+  .task-table td[data-label="Name"] { flex-direction: row-reverse; justify-content: flex-end; gap: 12px; background: #FAF9F7; border-radius: 16px 16px 0 0; }
+  .task-table td[data-label="Name"]::before { display: none; }
+}
 </style>
 </head>
 <body>
@@ -776,6 +846,18 @@ body {
     <button class="btn-primary" onclick="openAddModal()" data-i18n="btn_add_task">+ Add Task</button>
   </div>
 </nav>
+
+<!-- BOTTOM NAVIGATION (สำหรับ Mobile เท่านั้น) -->
+<nav class="bottom-nav">
+  <button class="bnav-tab" onclick="showView('year')"><span class="icon">📅</span><span data-i18n="nav_year">Year</span></button>
+  <button class="bnav-tab" onclick="showView('month')"><span class="icon">🗓️</span><span data-i18n="nav_month">Month</span></button>
+  <button class="bnav-tab" onclick="showView('week')"><span class="icon">📋</span><span data-i18n="nav_week">Week</span></button>
+  <button class="bnav-tab active" onclick="showView('day')"><span class="icon">☀️</span><span data-i18n="nav_day">Today</span></button>
+  <button class="bnav-tab" onclick="showView('tasks')"><span class="icon">✅</span><span data-i18n="nav_tasks">Tasks</span></button>
+</nav>
+
+<!-- FLOATING ACTION BUTTON (สำหรับ Mobile เท่านั้น) -->
+<button class="fab-btn" onclick="openAddModal()">+</button>
 
 <!-- MAIN CONTENT -->
 <main class="main" id="main-content" style="opacity: 0.3; pointer-events: none;">
@@ -886,6 +968,7 @@ body {
 <!-- ADD TASK MODAL -->
 <div class="modal-overlay" id="add-modal">
   <div class="modal">
+    <div class="modal-drag-handle"></div>
     <div class="modal-header">
       <span class="modal-title" id="modal-title" data-i18n="modal_add_title">New Task</span>
       <button class="modal-close" onclick="closeAddModal()">×</button>
@@ -991,6 +1074,7 @@ body {
 <!-- TASK DETAIL MODAL -->
 <div class="modal-overlay" id="detail-modal">
   <div class="modal">
+    <div class="modal-drag-handle"></div>
     <div class="modal-header">
       <span class="modal-title" id="detail-title">Task Detail</span>
       <button class="modal-close" onclick="closeDetailModal()">×</button>
@@ -1306,6 +1390,7 @@ let sortCol = 'deadline';
 let sortDir = 'asc';
 let fpStart, fpDeadline, fpRepeat;
 let searchQuery = '';
+const HOURS = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
 
 // ===== HELPERS =====
 function saveTasks() { 
@@ -1445,11 +1530,17 @@ function showToast(msg) {
 
 function showView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+  document.querySelectorAll('.nav-tab, .bnav-tab').forEach(tab => tab.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
   const tabNames = ['year','month','week','day','tasks'];
   const tabs = document.querySelectorAll('.nav-tab');
-  tabNames.forEach((n,i) => { if(n===name && tabs[i]) tabs[i].classList.add('active'); });
+  const btabs = document.querySelectorAll('.bnav-tab');
+  tabNames.forEach((n,i) => { 
+    if(n===name) {
+      if(tabs[i]) tabs[i].classList.add('active'); 
+      if(btabs[i]) btabs[i].classList.add('active');
+    }
+  });
   activeView = name;
   refreshViews();
 }
@@ -1702,27 +1793,27 @@ function renderTaskList() {
     const repeatLabel = (t2.repeat && t2.repeat !== 'none') ? `<span class="repeat-badge">🔁 ${t('repeat_badge',t2.repeat)}</span>` : '';
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td><input type="checkbox" class="task-checkbox" ${t2.status==='done'?'checked':''} onchange="toggleDone('${t2.id}',this.checked)"></td>
-      <td style="max-width:220px;">
+      <td data-label=""><input type="checkbox" class="task-checkbox" ${t2.status==='done'?'checked':''} onchange="toggleDone('${t2.id}',this.checked)"></td>
+      <td data-label="Name" style="max-width:220px;">
         <div style="display:flex;align-items:center;gap:6px;">
           ${t2.color ? `<span style="width:8px;height:8px;border-radius:50%;background:${t2.color};flex-shrink:0;display:inline-block;"></span>` : ''}
           <span style="font-weight:500;">${t2.name}</span>
         </div>
         ${repeatLabel}
       </td>
-      <td><span class="type-tag" style="background:${TYPE_COLORS[t2.type]||'#EEE'};color:${TYPE_TEXT[t2.type]||'#333'};">${TYPE_ICONS[t2.type]||''} ${t2.type}</span></td>
-      <td><span class="priority-dot p-${pClass}"></span>${PRIORITY_LABELS[pClass]||pClass}</td>
-      <td class="text-muted">${fmtDatetime(t2.start)}</td>
-      <td class="text-muted">${fmtDatetime(t2.deadline)}</td>
-      <td><span class="countdown-chip ${cd.cls}">${cd.text}</span></td>
-      <td>
+      <td data-label="${t('th_type')}"><span class="type-tag" style="background:${TYPE_COLORS[t2.type]||'#EEE'};color:${TYPE_TEXT[t2.type]||'#333'};">${TYPE_ICONS[t2.type]||''} ${t2.type}</span></td>
+      <td data-label="${t('th_priority')}"><span class="priority-dot p-${pClass}"></span>${PRIORITY_LABELS[pClass]||pClass}</td>
+      <td data-label="${t('th_start')}" class="text-muted">${fmtDatetime(t2.start)}</td>
+      <td data-label="${t('th_deadline')}" class="text-muted">${fmtDatetime(t2.deadline)}</td>
+      <td data-label="${t('th_countdown')}"><span class="countdown-chip ${cd.cls}">${cd.text}</span></td>
+      <td data-label="${t('th_status')}">
         <select class="status-select ${t2.status}" onchange="changeStatus('${t2.id}',this.value,this)">
           <option value="todo" ${t2.status==='todo'?'selected':''}>📌 ${t('status_todo')}</option>
           <option value="doing" ${t2.status==='doing'?'selected':''}>🔄 ${t('status_doing')}</option>
           <option value="done" ${t2.status==='done'?'selected':''}>✅ ${t('status_done')}</option>
         </select>
       </td>
-      <td style="white-space:nowrap;">
+      <td data-label="Actions" style="white-space:nowrap;">
         <button class="btn-ghost" style="padding:4px 8px;font-size:11px;" onclick="openDetail('${t2.id}')">${t('view_btn')}</button>
         <button class="btn-ghost" style="padding:4px 8px;font-size:11px;margin-left:4px;" onclick="deleteTask('${t2.id}')">${t('del_btn')}</button>
       </td>
