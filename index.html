@@ -61,7 +61,7 @@ body {
 }
 
 /* ===== SCROLLBAR ===== */
-::-webkit-scrollbar { width: 6px; height: 6px; display: none; /* ซ่อนในมือถือ */ }
+::-webkit-scrollbar { width: 6px; height: 6px; display: none; }
 @media (min-width: 769px) { ::-webkit-scrollbar { display: block; } }
 ::-webkit-scrollbar-track { background: var(--cream2); }
 ::-webkit-scrollbar-thumb { background: var(--ink3); border-radius: 3px; }
@@ -72,11 +72,11 @@ body {
   background: rgba(253, 252, 251, 0.95);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; gap: 0;
   height: 58px; padding: 0 24px; box-shadow: var(--shadow);
 }
 
-.logo { font-family: 'Mitr', sans-serif; font-size: 18px; font-weight: 500; color: var(--ink); white-space: nowrap; letter-spacing: 0; }
+.logo { font-family: 'Mitr', sans-serif; font-size: 18px; font-weight: 500; color: var(--ink); white-space: nowrap; letter-spacing: 0; margin-right: 32px; }
 .logo span { color: var(--accent); }
 
 .nav-tabs { display: flex; gap: 2px; position: absolute; left: 50%; transform: translateX(-50%); }
@@ -84,12 +84,12 @@ body {
 .nav-tab:hover { background: var(--cream2); color: var(--ink); }
 .nav-tab.active { background: var(--ink); color: var(--cream); }
 
-.topbar-right { display: flex; align-items: center; gap: 10px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 
-.btn-primary { padding: 7px 16px; border-radius: 8px; background: var(--accent); color: white; border: none; font-family: 'Sarabun', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; box-shadow: 0 4px 10px rgba(124, 111, 205, 0.3); display: flex; align-items: center; justify-content: center; }
+.btn-primary { padding: 7px 16px; border-radius: 8px; background: var(--accent); color: white; border: none; font-family: 'Sarabun', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; box-shadow: 0 4px 10px rgba(124, 111, 205, 0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0;}
 .btn-primary:hover { background: #6a5fb5; transform: translateY(-1px); box-shadow: 0 6px 14px rgba(124, 111, 205, 0.4); }
 
-.btn-ghost { padding: 7px 12px; border-radius: 8px; background: var(--white); color: var(--ink2); border: 1px solid var(--border); font-family: 'Sarabun', sans-serif; font-size: 14px; font-weight: 400; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.btn-ghost { padding: 7px 12px; border-radius: 8px; background: var(--white); color: var(--ink2); border: 1px solid var(--border); font-family: 'Sarabun', sans-serif; font-size: 14px; font-weight: 400; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0;}
 .btn-ghost:hover { background: var(--cream2); color: var(--ink); }
 
 /* ===== MAIN CONTENT ===== */
@@ -240,7 +240,7 @@ body {
 .color-dot-opt:hover { transform: scale(1.1); }
 .color-dot-opt.selected { border-color: var(--ink); transform: scale(1.15); box-shadow: 0 4px 12px rgba(0,0,0,0.2);}
 
-.search-wrap { position: relative; flex: 1; max-width: 320px; }
+.search-wrap { position: relative; flex: 1; max-width: 260px; min-width: 140px; }
 .search-input { width: 100%; padding: 9px 12px 9px 38px; border-radius: 10px; border: 1px solid var(--border); background: #FAF9F7; font-family: 'Sarabun', sans-serif; font-size: 14px; color: var(--ink); outline: none; transition: all 0.2s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.01); }
 .search-input:focus { background: var(--white); border-color: var(--accent2); box-shadow: 0 0 0 4px rgba(124, 111, 205, 0.1); }
 .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; color: var(--ink3); pointer-events: none; }
@@ -269,38 +269,55 @@ body {
 .toast { background: rgba(26,26,26,0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: white; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); max-width: 300px; pointer-events: all; }
 @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
+
 /* ==============================================================
    📱 MOBILE RESPONSIVE OVERRIDES (ทำมาเพื่อโทรศัพท์โดยเฉพาะ)
 ============================================================== */
-/* ซ่อนสิ่งที่เป็นของ Mobile ออกไปเมื่อเปิดใน Desktop */
-.bottom-nav { display: none; }
 .fab-btn { display: none; }
 
 @media (max-width: 768px) {
   /* --- 1. Top Bar & Navigation --- */
-  .topbar { padding: 0 16px; height: 60px; justify-content: space-between; gap: 8px; }
-  .logo { margin-right: auto; font-size: 16px; }
-  .nav-tabs, .topbar-right .btn-primary, .topbar-right .btn-ghost, .today-btn, .lang-toggle, .user-info-chip { display: none !important; }
-  .search-wrap { max-width: 140px; flex: 1; }
+  .topbar { 
+    padding: 12px 16px 0; 
+    height: auto; 
+    flex-wrap: wrap; /* ยอมให้เนื้อหาปัดลงบรรทัดใหม่ได้ */
+    justify-content: space-between;
+  }
+  .logo { font-size: 18px; margin-right: auto; }
+  
+  /* ซ่อนปุ่มที่ไม่จำเป็นในมือถือ เพื่อประหยัดที่ */
+  .topbar-right .btn-primary, .topbar-right .btn-ghost, .today-btn, .lang-toggle, .user-info-chip { display: none !important; }
+  
+  .search-wrap { max-width: 140px; margin-left: 0; }
   .search-input { padding-left: 30px; font-size: 13px; }
   .search-icon { font-size: 14px; left: 10px; }
 
-  /* เมนูด้านล่าง (Bottom Nav) */
-  .bottom-nav {
-    display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
-    background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-    border-top: 1px solid var(--border); border-radius: 20px 20px 0 0;
-    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
-    justify-content: space-between; box-shadow: 0 -10px 30px rgba(0,0,0,0.06);
+  /* นำ Nav Tabs กลับมาแสดงด้านบน แต่ให้เลื่อนซ้ายขวาได้ */
+  .nav-tabs { 
+    display: flex !important; 
+    position: relative; 
+    left: auto; 
+    transform: none; 
+    width: calc(100% + 32px); /* ให้แถบยาวทะลุขอบจอ */
+    margin-left: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    overflow-x: auto; 
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    order: 3; /* ผลักลงไปอยู่บรรทัดล่างสุดของ Topbar */
+    margin-top: 12px;
+    padding-bottom: 12px;
+    gap: 8px;
+    scrollbar-width: none;
   }
-  .bnav-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border: none; font-size: 10px; font-family: 'Sarabun', sans-serif; font-weight: 500; color: var(--ink3); gap: 4px; padding: 8px 0; transition: all 0.2s; cursor: pointer; }
-  .bnav-tab .icon { font-size: 20px; transition: transform 0.2s; }
-  .bnav-tab.active { color: var(--accent); }
-  .bnav-tab.active .icon { transform: scale(1.2) translateY(-2px); }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab { flex-shrink: 0; scroll-snap-align: start; padding: 6px 14px; font-size: 14px; background: var(--cream2); border: 1px solid var(--border); border-radius: 20px;}
+  .nav-tab.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 
   /* ปุ่ม Add Task ลอยด้านขวาล่าง (FAB) */
   .fab-btn {
-    display: flex; position: fixed; bottom: calc(85px + env(safe-area-inset-bottom)); right: 16px;
+    display: flex; position: fixed; bottom: calc(24px + env(safe-area-inset-bottom)); right: 16px;
     width: 56px; height: 56px; border-radius: 28px; background: var(--accent); color: white;
     font-size: 28px; font-weight: 300; align-items: center; justify-content: center;
     box-shadow: 0 4px 20px rgba(124, 111, 205, 0.5); border: none; z-index: 98; cursor: pointer;
@@ -308,13 +325,14 @@ body {
   }
   .fab-btn:active { transform: scale(0.95); }
 
-  /* ย้าย Toast แจ้งเตือนหลบ Bottom Nav */
-  .toast-container { bottom: calc(90px + env(safe-area-inset-bottom)); left: 50%; right: auto; transform: translateX(-50%); align-items: center; }
+  /* ย้าย Toast แจ้งเตือนหลบ FAB */
+  .toast-container { bottom: calc(24px + env(safe-area-inset-bottom)); left: 50%; right: auto; transform: translateX(-50%); align-items: center; z-index: 10001; }
   .toast { animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); text-align: center; }
   @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
   /* --- 2. Main Layout & Grids --- */
-  .main { padding: 16px 12px calc(110px + env(safe-area-inset-bottom)); margin-top: 60px; min-height: auto; }
+  /* ดัน Main ลงมา เพราะ Topbar สูงขึ้นจากการเพิ่มแถว Nav Tabs */
+  .main { padding: 16px 12px calc(80px + env(safe-area-inset-bottom)); margin-top: 100px; min-height: auto; }
   .months-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .year-header { width: 100%; justify-content: space-between; padding: 16px; }
   .year-nav-btn { width: 32px; height: 32px; }
@@ -326,12 +344,12 @@ body {
   .cal-day { min-height: 70px; padding: 4px; }
   .day-num { font-size: 12px; width: 22px; height: 22px; margin-bottom: 4px; }
   .cal-event-pill { font-size: 9px; padding: 2px 4px; margin-bottom: 2px; border-left-width: 2px; line-height: 1.2; }
-  .day-tooltip { display: none !important; } /* บนมือถือซ่อน Tooltip ไปเลย เพราะการแตะจะเปิดหน้ารายวันอยู่แล้ว (ลดความรำคาญ) */
+  .day-tooltip { display: none !important; }
 
   /* Week View - อนุญาตให้เลื่อนซ้ายขวาได้ */
   .week-grid-wrap { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; border-radius: 16px; }
   .week-grid-wrap::-webkit-scrollbar { display: none; }
-  .week-header-row, .week-body { min-width: 650px; } /* บังคับความกว้างขั้นต่ำ ป้องกันตารางบีบตัว */
+  .week-header-row, .week-body { min-width: 650px; }
 
   /* Day View */
   .day-hour-label { width: 60px; min-width: 60px; padding: 12px 4px; font-size: 11px; text-align: center; }
@@ -339,43 +357,36 @@ body {
   /* --- 3. Task List (เปลี่ยนตารางเป็นการ์ด) --- */
   .tasklist-header { flex-direction: column; align-items: flex-start; padding: 16px; }
   
-  /* ให้ปุ่ม Filter เลื่อนซ้ายขวาได้ */
   .tasklist-filters { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; margin-left: -4px; padding-left: 4px; }
   .tasklist-filters::-webkit-scrollbar { display: none; }
   .filter-btn { flex-shrink: 0; padding: 6px 14px; font-size: 12px; }
 
-  /* ปรับ Table เป็น Card */
   .task-table, .task-table tbody { display: flex; flex-direction: column; gap: 12px; }
-  .task-table thead { display: none; } /* ซ่อนหัวตาราง */
+  .task-table thead { display: none; } 
   
   .task-table tr {
     display: flex; flex-direction: column; position: relative;
     background: var(--white); border: 1px solid var(--border); border-radius: 16px;
-    padding: 16px 16px 16px 44px; /* เว้นที่ด้านซ้ายให้ Checkbox */
+    padding: 16px 16px 16px 44px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.03); margin-bottom: 0;
   }
   .task-table td { display: flex; justify-content: flex-start; align-items: center; border: none !important; padding: 0 !important; margin-bottom: 8px; }
   .task-table td:last-child { margin-bottom: 0; }
   
-  /* จับคอลัมน์ต่างๆ ให้เข้ารูปการ์ด */
-  .task-table td:nth-child(1) { position: absolute; left: 14px; top: 16px; margin: 0; } /* Checkbox */
-  .task-table td:nth-child(2) { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding-bottom: 8px !important; margin-bottom: 8px !important; border-bottom: 1px dashed var(--border2) !important; width: 100%; max-width: 100%; } /* Name */
+  .task-table td:nth-child(1) { position: absolute; left: 14px; top: 16px; margin: 0; }
+  .task-table td:nth-child(2) { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding-bottom: 8px !important; margin-bottom: 8px !important; border-bottom: 1px dashed var(--border2) !important; width: 100%; max-width: 100%; }
   .task-table td:nth-child(2) > div { font-size: 16px; font-weight: 600; line-height: 1.4; color: var(--ink); white-space: normal; }
   
-  /* Tags ให้อยู่เรียงกัน */
   .task-table td:nth-child(3), .task-table td:nth-child(4), .task-table td:nth-child(8) { display: inline-block; width: auto; margin-right: 6px; margin-bottom: 12px; }
   
-  /* วันที่ Start/Deadline ให้มี Label โชว์ */
   .task-table td[data-label] { font-size: 13px; color: var(--ink2); display: flex; justify-content: space-between; width: 100%; margin-bottom: 4px; }
   .task-table td[data-label]::before { content: attr(data-label); font-weight: 600; color: var(--ink3); font-size: 11px; text-transform: uppercase; }
   
-  /* ซ่อน Label ของอันที่ไม่จำเป็นต้องโชว์ */
   .task-table td:nth-child(1)::before, .task-table td:nth-child(2)::before, .task-table td:nth-child(3)::before, .task-table td:nth-child(4)::before, .task-table td:nth-child(7)::before, .task-table td:nth-child(8)::before, .task-table td:nth-child(9)::before { display: none !important; }
 
-  /* Countdown & Actions */
-  .task-table td:nth-child(7) { display: block; margin: 12px 0; width: 100%; } /* Countdown */
+  .task-table td:nth-child(7) { display: block; margin: 12px 0; width: 100%; } 
   .task-table td:nth-child(7) .countdown-chip { display: block; text-align: center; padding: 8px; border-radius: 8px; font-size: 13px; }
-  .task-table td:nth-child(9) { display: flex; justify-content: flex-end; width: 100%; gap: 8px; border-top: 1px solid var(--border2) !important; padding-top: 12px !important; margin-top: 4px; } /* Actions */
+  .task-table td:nth-child(9) { display: flex; justify-content: flex-end; width: 100%; gap: 8px; border-top: 1px solid var(--border2) !important; padding-top: 12px !important; margin-top: 4px; }
 
   /* --- 4. Modals (Bottom Sheets) --- */
   .modal-overlay { align-items: flex-end; }
@@ -398,7 +409,7 @@ body {
 }
 
 /* Utils สำหรับซ่อนตอน Export PDF */
-.hide-for-capture .day-tooltip, .hide-for-capture .bottom-nav, .hide-for-capture .fab-btn { display: none !important; }
+.hide-for-capture .day-tooltip, .hide-for-capture .fab-btn { display: none !important; }
 </style>
 </head>
 <body>
@@ -424,6 +435,8 @@ body {
 <!-- TOP BAR -->
 <nav class="topbar">
   <div class="logo">Planner<span>Pal</span></div>
+  
+  <!-- เมนูจะอยู่บรรทัดที่ 2 ในมือถือ แต่ในคอมอยู่ตรงกลางเหมือนเดิม -->
   <div class="nav-tabs">
     <button class="nav-tab" onclick="showView('year')" data-i18n="nav_year">📅 Year</button>
     <button class="nav-tab" onclick="showView('month')" data-i18n="nav_month">🗓️ Month</button>
@@ -431,6 +444,7 @@ body {
     <button class="nav-tab active" onclick="showView('day')" data-i18n="nav_day">☀️ Today</button>
     <button class="nav-tab" onclick="showView('tasks')" data-i18n="nav_tasks">✅ All Tasks</button>
   </div>
+  
   <div class="topbar-right">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
@@ -441,7 +455,6 @@ body {
     <button class="today-btn" onclick="goToday()" data-i18n="btn_today">Today</button>
     <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()" title="Switch language">🇬🇧</button>
     
-    <!-- ปุ่ม Logout -->
     <div class="user-info-chip" id="user-info-chip" style="display:none;">
       <span id="user-email-display" style="max-width:100px; overflow:hidden; text-overflow:ellipsis;"></span>
       <button class="btn-ghost" style="padding:2px 6px; font-size:11px;" onclick="logOut()">Logout</button>
@@ -450,15 +463,6 @@ body {
     <button class="btn-ghost" onclick="exportData()" data-i18n="btn_export">⬇ Export</button>
     <button class="btn-primary" onclick="openAddModal()" data-i18n="btn_add_task">+ Add Task</button>
   </div>
-</nav>
-
-<!-- BOTTOM NAVIGATION (สำหรับ Mobile เท่านั้น) -->
-<nav class="bottom-nav">
-  <button class="bnav-tab" onclick="showView('year')"><span class="icon">📅</span><span data-i18n="nav_year">Year</span></button>
-  <button class="bnav-tab" onclick="showView('month')"><span class="icon">🗓️</span><span data-i18n="nav_month">Month</span></button>
-  <button class="bnav-tab" onclick="showView('week')"><span class="icon">📋</span><span data-i18n="nav_week">Week</span></button>
-  <button class="bnav-tab active" onclick="showView('day')"><span class="icon">☀️</span><span data-i18n="nav_day">Today</span></button>
-  <button class="bnav-tab" onclick="showView('tasks')"><span class="icon">✅</span><span data-i18n="nav_tasks">Tasks</span></button>
 </nav>
 
 <!-- FLOATING ACTION BUTTON (สำหรับ Mobile เท่านั้น) -->
@@ -1408,12 +1412,12 @@ function renderTaskList() {
         </div>
         ${repeatLabel}
       </td>
-      <td data-label="Type"><span class="type-tag" style="background:${TYPE_COLORS[t2.type]||'#EEE'};color:${TYPE_TEXT[t2.type]||'#333'};">${TYPE_ICONS[t2.type]||''} ${t2.type}</span></td>
-      <td data-label="Priority"><span class="priority-dot p-${pClass}"></span>${PRIORITY_LABELS[pClass]||pClass}</td>
+      <td data-label="${t('th_type')}"><span class="type-tag" style="background:${TYPE_COLORS[t2.type]||'#EEE'};color:${TYPE_TEXT[t2.type]||'#333'};">${TYPE_ICONS[t2.type]||''} ${t2.type}</span></td>
+      <td data-label="${t('th_priority')}"><span class="priority-dot p-${pClass}"></span>${PRIORITY_LABELS[pClass]||pClass}</td>
       <td data-label="${t('th_start')}" class="text-muted">${fmtDatetime(t2.start)}</td>
       <td data-label="${t('th_deadline')}" class="text-muted">${fmtDatetime(t2.deadline)}</td>
-      <td data-label="Countdown"><span class="countdown-chip ${cd.cls}">${cd.text}</span></td>
-      <td data-label="Status">
+      <td data-label="${t('th_countdown')}"><span class="countdown-chip ${cd.cls}">${cd.text}</span></td>
+      <td data-label="${t('th_status')}">
         <select class="status-select ${t2.status}" onchange="changeStatus('${t2.id}',this.value,this)">
           <option value="todo" ${t2.status==='todo'?'selected':''}>📌 ${t('status_todo')}</option>
           <option value="doing" ${t2.status==='doing'?'selected':''}>🔄 ${t('status_doing')}</option>
